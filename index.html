@@ -263,19 +263,17 @@ map 1<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="nav-bar">
-                <a href="#" class="logo">Swachh<span>Explorer</span></a>
-                <ul class="tabs">
-                    <li><button class="tab-button active" onclick="switchTab('home')">Home</button></li>
-                    <li><button class="tab-button" onclick="switchTab('about')">About</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map1')">Schedule</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map2')">Visualize</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map3')">Grievances</button></li>
-                </ul>
-            </div>
-        </div>
+	<header>
+	    <div class="container">
+	        <div class="nav-bar">
+	        	  <a href="#" class="logo">Swachh<span>Explorer</span></a>
+	              <ul class="tabs">
+	                <li><a href="index.html" class="tab-button">Home</a></li>
+	                <li><a href="about.html" class="tab-button">About</a></li>
+				        </ul>
+	        </div>
+	    </div>
+
     </header>
 
     <main>
@@ -471,13 +469,12 @@ map 1<!DOCTYPE html>
             });
         }
       
-        document.addEventListener('keydown', e => {
-            if (e.key === '1') switchTab('home');
-            if (e.key === '2') switchTab('about');
-            if (e.key === '3') switchTab('map1');
-            if (e.key === '4') switchTab('map2');
-            if (e.key === '5') switchTab('map3');
-        });
+        const current = window.location.pathname.split("/").pop() || "index.html";
+            document.querySelectorAll(".tab-button").forEach(link => {
+            if (link.getAttribute("href") === current) {
+              link.classList.add("active");
+            }
+          });
     </script>
 </body>
 </html>
