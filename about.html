@@ -263,105 +263,22 @@ map 1<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="nav-bar">
-                <a href="#" class="logo">Swachh<span>Explorer</span></a>
-                <ul class="tabs">
-                    <li><button class="tab-button active" onclick="switchTab('home')">Home</button></li>
-                    <li><button class="tab-button" onclick="switchTab('about')">About</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map1')">Schedule</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map2')">Visualize</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map3')">Grievances</button></li>
-                </ul>
-            </div>
-        </div>
-    </header>
+	<header>
+	        <div class="container">
+	            <div class="nav-bar">
+	                <a href="index.html" class="logo">Swachh<span>Explorer</span></a>
+	                <ul class="tabs">
+	                    <li><a href="index.html" class="tab-button active">Home</a></li>
+	                    <li><a href="about.html" class="tab-button">About</a></li>
+	                    <li><a href="schedule.html" class="tab-button" target="_blank">Schedule</a></li>
+	                    <li><a href="visualize.html" class="tab-button" target="_blank">Visualize</a></li>
+	                    <li><a href="grievances.html" class="tab-button" target="_blank">Grievances</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	    </header>
 
     <main>
-        <div id="home" class="tab-content active">
-            <div class="hero">
-                <div class="container">
-                    <h1>Welcome to <span class="highlight">Swachh Explorer</span></h1>
-                    <p>GIS for India's Urban Seniors: Advancing Solid Waste Management and Independent Living</p>
-                    <a href="#" onclick="switchTab('map1'); return false;" class="btn">Start Exploring →</a>
-                </div>
-            </div>
-            
-            <!-- EXPLORE MAPS SECTION – original compact emoji icons -->
-            <div class="explore-section">
-                <div class="container">
-                    <h2 class="section-title" style="text-align: center;">Explore Our Interactive Maps</h2>
-                    <div class="cards-grid">
-                        <div class="map-card">
-                            <div class="card-icon">
-							<img src="images/GarbageCollectionIcon.png" alt="Map 1">
-							</div>
-                              <!--<h3>Local waste collection schedule</h3> -->
-                            <!-- <p>Local waste collection schedule</p> -->
-                            <a href="#" onclick="switchTab('map1'); return false;" class="btn">Local waste collection schedule</a>
-                        </div>
-                        <div class="map-card">
-                            <div class="card-icon">
-							<img src="images/SWMVisualization.png" alt="Map 1">
-							</div>
-                            <!-- <h3>Urban waste management visualization</h3> -->
-                            <!-- <p>Urban waste management visualization</p> -->
-                            <a href="#" onclick="switchTab('map2'); return false;" class="btn">Urban waste management visualization</a>
-                        </div>
-                        <div class="map-card">
-                            <div class="card-icon">
-							<img src="images/SWMGrievances.png" alt="Map 1">
-							</div>
-                            <!-- <h3>SWM Grievances over years</h3> -->
-                            <!-- <p>SWM Grievances over years</p> -->
-                            <a href="#" onclick="switchTab('map3'); return false;" class="btn">SWM Grievances over years</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GET IN TOUCH SECTION – tight layout matching your screenshot -->
-            <div class="cta-section">
-                <div class="container">
-                    <h2 class="section-title">Get In Touch</h2>
-                    <div class="cards-grid">
-
-                        <a href="https://arcg.is/zrOfW2" target="_blank" class="map-card" style="text-decoration:none;">
-                            <div class="card-icon">⚠️</div>
-                            <h3>Report Issues</h3>
-                            <p><strong>Swachh Explorer – By the Community, For the Community</strong><br>
-                               Help us improve Swachh Explorer. Your feedback and issue reports make this platform stronger for everyone.</p>
-                            <span class="btn">Submit Your Report Now →</span>
-                        </a>
-
-                        <div class="map-card" onclick="window.location.href='mailto:contact@swacchexplorer.in'">
-                            <div class="card-icon">🤝</div>
-                            <h3>Contact Us</h3>
-                            <p><strong>Collaborations &amp; Partnerships Welcome</strong><br>
-                               NGOs, community groups, and SWM organizations – partner with us to help maintain the platform, extend solid waste management features across India, and explore new ways to strengthen community impact.</p>
-                            
-                            <div class="email-section">
-                                <div class="email-display">
-                                    <a href="mailto:contact@swacchexplorer.in" onclick="event.stopImmediatePropagation();">contact@swacchexplorer.in</a>
-                                </div>
-                                <button onclick="copyEmail(event)" class="btn">Copy Email</button>
-                            </div>
-                        </div>
-
-                        <a href="https://apps.bbmpgov.in/SWM/Home/Forms/Home.aspx" target="_blank" class="map-card" style="text-decoration:none;">
-                            <div class="card-icon">🏛️</div>
-                            <h3>Municipal Site</h3>
-                            <p><strong>Official Solid Waste Management website.</strong><br>
-                               Provides vendor details, ward information, official documents &amp; circulars, and complaint registration.</p>
-                            <span class="btn">Visit Official Site →</span>
-                        </a>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- ABOUT TAB -->
         <div id="about" class="tab-content">
             <div class="container">
@@ -384,46 +301,7 @@ map 1<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- MAP TABS -->
-        <div id="map1" class="tab-content">
-            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">Map 1: Local waste collection schedule</h2>
-			<div class="container">
-				<div class="about-text">
-					<p><strong>Important Data Disclaimer</strong></p>
-					<p>All data shown on this GIS map is simulated (mock/fictional) for demonstration purposes only.</p>
-					<p>Once we receive official approval and access to authentic solid waste management datasets from the concerned authority, the platform will be updated with real, accurate, and live data. Until then, all information you see are entirely simulated to showcase the intended functionality and user experience.</p>
-			 	</div>
-		 	</div>
-            <div class="map-container">
-                <iframe src="https://abc.maps.arcgis.com/apps/instant/sidebar/index.html?appid=1e5fde017dab45fe8815f7da4094e153" allowfullscreen></iframe>
-            </div>
-        </div>
-        <div id="map2" class="tab-content">
-            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">Urban waste management visualization</h2>
-			<div class="container">
-			 	<div class="about-text">
-      				<p><strong>Important Data Disclaimer</strong></p>
-        			<p>The platform will be updated with accurate and verified official data once we receive the necessary approvals and access.</p>
-    			</div>
-			</div>
-            <div class="map-container">
-                <iframe src="https://clausa.app.carto.com/map/3a81fd1c-3f6f-4428-9f62-67a2ea5c9613" allowfullscreen></iframe>
-            </div>
-        </div>
-        <div id="map3" class="tab-content">
-            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">SWM Grievances over years</h2>
-			<div class="container">
-			 	<div class="about-text">
-      				<p><strong>Important Data Disclaimer</strong></p>
-        			<p>The platform will be updated with accurate and verified official data once we receive the necessary approvals and access.</p>
-    			</div>
-			</div>
-            <div class="map-container">
-                <iframe src="https://clausa.app.carto.com/map/32d5f8a9-4f94-4e5f-ae30-cdfb7b6a963d" allowfullscreen></iframe>
-            </div>
-        </div>
-    </main>
-
+       
     <!-- FOOTER -->
     <footer>
         <div class="container footer-content">
@@ -440,25 +318,17 @@ map 1<!DOCTYPE html>
     </footer>
 
     <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-          
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(btn => {
-                if (btn.textContent.trim() === getTabName(tab)) btn.classList.add('active');
+        // Set active nav link based on current page (works across all 5 files)
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.tab-button').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentFile || (currentFile === '' && href === 'index.html')) {
+                    link.classList.add('active');
+                }
             });
-        }
-      
-        function getTabName(tabId) {
-            if (tabId === 'home') return 'Home';
-            if (tabId === 'about') return 'About';
-            if (tabId === 'map1') return 'Schedule';
-            if (tabId === 'map2') return 'Visualize';
-            if (tabId === 'map3') return 'Grievances';
-            return '';
-        }
+        });
+ 
 
         function copyEmail(e) {
             e.stopImmediatePropagation();
@@ -471,13 +341,6 @@ map 1<!DOCTYPE html>
             });
         }
       
-        document.addEventListener('keydown', e => {
-            if (e.key === '1') switchTab('home');
-            if (e.key === '2') switchTab('about');
-            if (e.key === '3') switchTab('map1');
-            if (e.key === '4') switchTab('map2');
-            if (e.key === '5') switchTab('map3');
-        });
     </script>
 </body>
 </html>
