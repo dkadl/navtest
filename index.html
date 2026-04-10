@@ -263,20 +263,20 @@ map 1<!DOCTYPE html>
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="nav-bar">
-                <a href="#" class="logo">Swachh<span>Explorer</span></a>
-                <ul class="tabs">
-                    <li><button class="tab-button active" onclick="switchTab('home')">Home</button></li>
-                    <li><button class="tab-button" onclick="switchTab('about')">About</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map1')">Schedule</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map2')">Visualize</button></li>
-                    <li><button class="tab-button" onclick="switchTab('map3')">Grievances</button></li>
-                </ul>
-            </div>
-        </div>
-    </header>
+	<header>
+	        <div class="container">
+	            <div class="nav-bar">
+	                <a href="index.html" class="logo">Swachh<span>Explorer</span></a>
+	                <ul class="tabs">
+	                    <li><a href="index.html" class="tab-button active">Home</a></li>
+	                    <li><a href="about.html" class="tab-button">About</a></li>
+	                    <li><a href="schedule.html" class="tab-button" target="_blank">Schedule</a></li>
+	                    <li><a href="visualize.html" class="tab-button" target="_blank">Visualize</a></li>
+	                    <li><a href="grievances.html" class="tab-button" target="_blank">Grievances</a></li>
+	                </ul>
+	            </div>
+	        </div>
+	    </header>
 
     <main>
         <div id="home" class="tab-content active">
@@ -362,67 +362,7 @@ map 1<!DOCTYPE html>
             </div>
         </div>
 
-        <!-- ABOUT TAB -->
-        <div id="about" class="tab-content">
-            <div class="container">
-                <h2 class="section-title">About This Website</h2>
-                <div class="about-text">
-                    <p>We empower urban seniors in Bengaluru to live more independently through smarter solid waste management.</p>
-                    <p>Rapid urbanization and the shift to nuclear families have left many seniors managing alone. Unreliable door-to-door collections, hard-to-find bins, and unclear information often turn everyday tasks into sources of stress and isolation.</p>
-                    <p>That’s why we built SWM — a free, easy-to-use web platform with an interactive GIS map. By integrating municipal data, it delivers real-time visibility into collection schedules, bin locations, and service status. Seniors can quickly locate bins, report issues, track pickups, and manage their waste with confidence and autonomy.</p>
-                    <p>Our mission is simple: reduce missed or delayed collections, eliminate daily hassles, and support thousands of seniors in high-density wards to live with greater dignity and independence.</p>
-
-                    <p style="margin-top: 28px;">This platform follows the official Indian colour-coded dustbin system. Every colour is used throughout the design.</p>
-                    <ul style="margin-left: 30px; font-size: 1.05rem; line-height: 1.8;">
-                        <li><strong style="color:var(--green)">Green</strong> – Biodegradable/Organic</li>
-                        <li><strong style="color:var(--blue)">Blue</strong> – Dry/Recyclable</li>
-                        <li><strong style="color:var(--red)">Red</strong> – Hazardous/Biomedical</li>
-                        <li><strong style="color:var(--yellow)">Yellow</strong> – Sanitary/Medical</li>
-                        <li><strong style="color:var(--black)">Black/Grey</strong> – General waste</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- MAP TABS -->
-        <div id="map1" class="tab-content">
-            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">Map 1: Local waste collection schedule</h2>
-			<div class="container">
-				<div class="about-text">
-					<p><strong>Important Data Disclaimer</strong></p>
-					<p>All data shown on this GIS map is simulated (mock/fictional) for demonstration purposes only.</p>
-					<p>Once we receive official approval and access to authentic solid waste management datasets from the concerned authority, the platform will be updated with real, accurate, and live data. Until then, all information you see are entirely simulated to showcase the intended functionality and user experience.</p>
-			 	</div>
-		 	</div>
-            <div class="map-container">
-                <iframe src="https://abc.maps.arcgis.com/apps/instant/sidebar/index.html?appid=1e5fde017dab45fe8815f7da4094e153" allowfullscreen></iframe>
-            </div>
-        </div>
-        <div id="map2" class="tab-content">
-            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">Urban waste management visualization</h2>
-			<div class="container">
-			 	<div class="about-text">
-      				<p><strong>Important Data Disclaimer</strong></p>
-        			<p>The platform will be updated with accurate and verified official data once we receive the necessary approvals and access.</p>
-    			</div>
-			</div>
-            <div class="map-container">
-                <iframe src="https://clausa.app.carto.com/map/3a81fd1c-3f6f-4428-9f62-67a2ea5c9613" allowfullscreen></iframe>
-            </div>
-        </div>
-        <div id="map3" class="tab-content">
-            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">SWM Grievances over years</h2>
-			<div class="container">
-			 	<div class="about-text">
-      				<p><strong>Important Data Disclaimer</strong></p>
-        			<p>The platform will be updated with accurate and verified official data once we receive the necessary approvals and access.</p>
-    			</div>
-			</div>
-            <div class="map-container">
-                <iframe src="https://clausa.app.carto.com/map/32d5f8a9-4f94-4e5f-ae30-cdfb7b6a963d" allowfullscreen></iframe>
-            </div>
-        </div>
-    </main>
+           </main>
 
     <!-- FOOTER -->
     <footer>
@@ -440,25 +380,16 @@ map 1<!DOCTYPE html>
     </footer>
 
     <script>
-        function switchTab(tab) {
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-          
-            const buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(btn => {
-                if (btn.textContent.trim() === getTabName(tab)) btn.classList.add('active');
+       // Set active nav link based on current page (works across all 5 files)
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            document.querySelectorAll('.tab-button').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentFile || (currentFile === '' && href === 'index.html')) {
+                    link.classList.add('active');
+                }
             });
-        }
-      
-        function getTabName(tabId) {
-            if (tabId === 'home') return 'Home';
-            if (tabId === 'about') return 'About';
-            if (tabId === 'map1') return 'Schedule';
-            if (tabId === 'map2') return 'Visualize';
-            if (tabId === 'map3') return 'Grievances';
-            return '';
-        }
+        });
 
         function copyEmail(e) {
             e.stopImmediatePropagation();
@@ -470,14 +401,7 @@ map 1<!DOCTYPE html>
                 setTimeout(() => { btn.innerHTML = original; }, 2000);
             });
         }
-      
-        document.addEventListener('keydown', e => {
-            if (e.key === '1') switchTab('home');
-            if (e.key === '2') switchTab('about');
-            if (e.key === '3') switchTab('map1');
-            if (e.key === '4') switchTab('map2');
-            if (e.key === '5') switchTab('map3');
-        });
+       
     </script>
 </body>
 </html>
