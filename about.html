@@ -320,10 +320,10 @@ map 1<!DOCTYPE html>
     <script>
         // Set active nav link based on current page (works across all 5 files)
         document.addEventListener('DOMContentLoaded', () => {
-            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            const currentFile = window.location.pathname.split('/').pop() || 'about.html';
             document.querySelectorAll('.tab-button').forEach(link => {
                 const href = link.getAttribute('href');
-                if (href === currentFile || (currentFile === '' && href === 'index.html')) {
+                if (href === currentFile || (currentFile === '' && href === 'about.html')) {
                     link.classList.add('active');
                 }
             });
