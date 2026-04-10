@@ -268,7 +268,7 @@ map 1<!DOCTYPE html>
 	            <div class="nav-bar">
 	                <a href="index.html" class="logo">Swachh<span>Explorer</span></a>
 	                <ul class="tabs">
-	                    <li><a href="index.html" class="tab-button active">Home</a></li>
+	                    <li><a href="index.html" class="tab-button">Home</a></li>
 	                    <li><a href="about.html" class="tab-button">About</a></li>
 	                    <li><a href="schedule.html" class="tab-button" target="_blank">Schedule</a></li>
 	                    <li><a href="visualize.html" class="tab-button" target="_blank">Visualize</a></li>
@@ -319,11 +319,20 @@ map 1<!DOCTYPE html>
 
     <script>
         // Set active nav link based on current page (works across all 5 files)
+ 
+        // FIXED: Only ONE tab is active on every page
         document.addEventListener('DOMContentLoaded', () => {
-            const currentFile = window.location.pathname.split('/').pop() || 'about.html';
+            const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+            
+            // 1. Remove active from ALL tabs first
+            document.querySelectorAll('.tab-button').forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // 2. Add active only to the correct one
             document.querySelectorAll('.tab-button').forEach(link => {
                 const href = link.getAttribute('href');
-                if (href === currentFile || (currentFile === '' && href === 'about.html')) {
+                if (href === currentFile) {
                     link.classList.add('active');
                 }
             });
