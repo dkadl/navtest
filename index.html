@@ -1,0 +1,483 @@
+map 1<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swachh Explorer | Solid Waste Management India</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --green: #2DB548;
+            --blue: #3498DB;
+            --red: #E74C3C;
+            --yellow: #F1C40F;
+            --black: #2C3E50;
+            --primary: #2DB548;
+            --primary-dark: #1E8B3A;
+            --light-green: #F0F9F3;
+            --footer-light: #F8F9FA;
+        }
+      
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+      
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: #FFFFFF;
+            color: #222222;
+            line-height: 1.6;
+        }
+      
+        header {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+      
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+      
+        .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
+      
+        .logo { font-size: 27px; font-weight: 700; color: var(--green); text-decoration: none; }
+        .logo span { color: #222; }
+      
+        .tabs { display: flex; gap: 8px; list-style: none; }
+      
+        .tab-button {
+            padding: 10px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #222;
+            background: transparent;
+            border: none;
+            border-bottom: 4px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+      
+        .tab-button:hover { color: var(--green); }
+        .tab-button.active { color: var(--green); border-bottom: 4px solid var(--green); }
+      
+        .tab-content { display: none; padding: 12px 0; }
+        .tab-content.active { display: block; }
+      
+        .hero {
+            text-align: center;
+            padding: 18px 20px 10px;
+            background: linear-gradient(135deg, var(--light-green) 0%, #FFFFFF 100%);
+        }
+      
+        .hero h1 { font-size: 2rem; color: #222; margin-bottom: 6px; }
+        .hero .highlight { color: var(--green); }
+        .hero p { font-size: 1.02rem; max-width: 700px; margin: 0 auto 16px; color: #555; }
+      
+        .map-container {
+            height: 71.25vh;
+            min-height: 520px;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 0;
+            width: 100%;
+        }
+      
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+      
+        .cards-grid { 
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px;
+            max-width: 1100px; 
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .explore-section .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .explore-section .cards-grid .map-card:last-child {
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: calc(50% - 10px);
+            }
+        }
+
+        .map-card {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            padding: 22px 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+      
+        .map-card:hover { transform: translateY(-6px); }
+        .map-card .card-icon { 
+            font-size: 2.8rem; 
+            margin-bottom: 10px; 
+        }
+        .map-card h3 { 
+            font-size: 1.3rem; 
+            margin-bottom: 8px; 
+            color: var(--green);
+        }
+        .map-card p { 
+            font-size: 0.94rem; 
+            color: #555; 
+            margin-bottom: 16px; 
+            line-height: 1.45; 
+            flex-grow: 1;
+        }
+
+        .email-section {
+            margin-top: auto;
+            padding-top: 12px;
+        }
+        .email-display {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 12px;
+        }
+        .email-display a {
+            color: var(--green);
+            text-decoration: underline;
+        }
+
+        .cta-section { 
+            padding: 16px 20px 32px; 
+            background-color: var(--light-green); 
+        }
+        .cta-section .section-title { 
+            font-size: 1.75rem; 
+            text-align: center; 
+            margin-bottom: 18px; 
+            color: #222; 
+        }
+
+        @media (min-width: 768px) {
+            .cta-section .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--green);
+            color: white;
+            padding: 11px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(45, 181, 72, 0.3);
+            font-size: 1rem;
+            border: none;
+        }
+      
+        .btn:hover { 
+            background-color: var(--primary-dark); 
+            transform: translateY(-2px); 
+        }
+
+        .cta-section .btn {
+            width: 100%;
+            margin-top: auto;
+        }
+
+        footer {
+            background-color: var(--footer-light);
+            color: #333;
+            padding: 32px 20px 24px;
+            text-align: center;
+        }
+      
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+      
+        .dustbin-title {
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 18px;
+            color: #222;
+            font-weight: 600;
+        }
+      
+        .dustbins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(126px, 1fr));
+            gap: 22px;
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-content: center;
+            place-items: center;
+        }
+      
+        .dustbin-card {
+            width: 126px !important;
+            height: 126px !important;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+        }
+      
+        .dustbin-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+      
+        .dustbin-card p {
+            font-size: 0.88rem;
+            opacity: 0.95;
+            max-width: 80%;
+            line-height: 1.3;
+        }
+      
+        .dustbin-green { background-color: var(--green); }
+        .dustbin-blue { background-color: var(--blue); }
+        .dustbin-red { background-color: var(--red); }
+        .dustbin-yellow { background-color: var(--yellow); color: #222; }
+        .dustbin-black { background-color: var(--black); }
+      
+        .copyright { font-size: 0.93rem; opacity: 0.85; margin-top: 20px; color: #555; }
+      
+        @media (max-width: 768px) {
+            .tabs { flex-wrap: wrap; justify-content: center; }
+            .dustbins-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); }
+            .map-container { height: 67vh; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="nav-bar">
+                <a href="#" class="logo">Swachh<span>Explorer</span></a>
+                <ul class="tabs">
+                    <li><button class="tab-button active" onclick="switchTab('home')">Home</button></li>
+                    <li><button class="tab-button" onclick="switchTab('about')">About</button></li>
+                    <li><button class="tab-button" onclick="switchTab('map1')">Schedule</button></li>
+                    <li><button class="tab-button" onclick="switchTab('map2')">Visualize</button></li>
+                    <li><button class="tab-button" onclick="switchTab('map3')">Grievances</button></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="home" class="tab-content active">
+            <div class="hero">
+                <div class="container">
+                    <h1>Welcome to <span class="highlight">Swachh Explorer</span></h1>
+                    <p>GIS for India's Urban Seniors: Advancing Solid Waste Management and Independent Living</p>
+                    <a href="#" onclick="switchTab('map1'); return false;" class="btn">Start Exploring →</a>
+                </div>
+            </div>
+            
+            <!-- EXPLORE MAPS SECTION – original compact emoji icons -->
+            <div class="explore-section">
+                <div class="container">
+                    <h2 class="section-title" style="text-align: center;">Explore Our Interactive Maps</h2>
+                    <div class="cards-grid">
+                        <div class="map-card">
+                            <div class="card-icon">
+							<img src="images/GarbageCollectionIcon.png" alt="Map 1">
+							</div>
+                              <!--<h3>Local waste collection schedule</h3> -->
+                            <!-- <p>Local waste collection schedule</p> -->
+                            <a href="#" onclick="switchTab('map1'); return false;" class="btn">Local waste collection schedule</a>
+                        </div>
+                        <div class="map-card">
+                            <div class="card-icon">
+							<img src="images/SWMVisualization.png" alt="Map 1">
+							</div>
+                            <!-- <h3>Urban waste management visualization</h3> -->
+                            <!-- <p>Urban waste management visualization</p> -->
+                            <a href="#" onclick="switchTab('map2'); return false;" class="btn">Urban waste management visualization</a>
+                        </div>
+                        <div class="map-card">
+                            <div class="card-icon">
+							<img src="images/SWMGrievances.png" alt="Map 1">
+							</div>
+                            <!-- <h3>SWM Grievances over years</h3> -->
+                            <!-- <p>SWM Grievances over years</p> -->
+                            <a href="#" onclick="switchTab('map3'); return false;" class="btn">SWM Grievances over years</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GET IN TOUCH SECTION – tight layout matching your screenshot -->
+            <div class="cta-section">
+                <div class="container">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <div class="cards-grid">
+
+                        <a href="https://arcg.is/zrOfW2" target="_blank" class="map-card" style="text-decoration:none;">
+                            <div class="card-icon">⚠️</div>
+                            <h3>Report Issues</h3>
+                            <p><strong>Swachh Explorer – By the Community, For the Community</strong><br>
+                               Help us improve Swachh Explorer. Your feedback and issue reports make this platform stronger for everyone.</p>
+                            <span class="btn">Submit Your Report Now →</span>
+                        </a>
+
+                        <div class="map-card" onclick="window.location.href='mailto:contact@swacchexplorer.in'">
+                            <div class="card-icon">🤝</div>
+                            <h3>Contact Us</h3>
+                            <p><strong>Collaborations &amp; Partnerships Welcome</strong><br>
+                               NGOs, community groups, and SWM organizations – partner with us to help maintain the platform, extend solid waste management features across India, and explore new ways to strengthen community impact.</p>
+                            
+                            <div class="email-section">
+                                <div class="email-display">
+                                    <a href="mailto:contact@swacchexplorer.in" onclick="event.stopImmediatePropagation();">contact@swacchexplorer.in</a>
+                                </div>
+                                <button onclick="copyEmail(event)" class="btn">Copy Email</button>
+                            </div>
+                        </div>
+
+                        <a href="https://apps.bbmpgov.in/SWM/Home/Forms/Home.aspx" target="_blank" class="map-card" style="text-decoration:none;">
+                            <div class="card-icon">🏛️</div>
+                            <h3>Municipal Site</h3>
+                            <p><strong>Official Solid Waste Management website.</strong><br>
+                               Provides vendor details, ward information, official documents &amp; circulars, and complaint registration.</p>
+                            <span class="btn">Visit Official Site →</span>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT TAB -->
+        <div id="about" class="tab-content">
+            <div class="container">
+                <h2 class="section-title">About This Website</h2>
+                <div class="about-text">
+                    <p>We empower urban seniors in Bengaluru to live more independently through smarter solid waste management.</p>
+                    <p>Rapid urbanization and the shift to nuclear families have left many seniors managing alone. Unreliable door-to-door collections, hard-to-find bins, and unclear information often turn everyday tasks into sources of stress and isolation.</p>
+                    <p>That’s why we built SWM — a free, easy-to-use web platform with an interactive GIS map. By integrating municipal data, it delivers real-time visibility into collection schedules, bin locations, and service status. Seniors can quickly locate bins, report issues, track pickups, and manage their waste with confidence and autonomy.</p>
+                    <p>Our mission is simple: reduce missed or delayed collections, eliminate daily hassles, and support thousands of seniors in high-density wards to live with greater dignity and independence.</p>
+
+                    <p style="margin-top: 28px;">This platform follows the official Indian colour-coded dustbin system. Every colour is used throughout the design.</p>
+                    <ul style="margin-left: 30px; font-size: 1.05rem; line-height: 1.8;">
+                        <li><strong style="color:var(--green)">Green</strong> – Biodegradable/Organic</li>
+                        <li><strong style="color:var(--blue)">Blue</strong> – Dry/Recyclable</li>
+                        <li><strong style="color:var(--red)">Red</strong> – Hazardous/Biomedical</li>
+                        <li><strong style="color:var(--yellow)">Yellow</strong> – Sanitary/Medical</li>
+                        <li><strong style="color:var(--black)">Black/Grey</strong> – General waste</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- MAP TABS -->
+        <div id="map1" class="tab-content">
+            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">Map 1: Local waste collection schedule</h2>
+			<div class="container">
+				<div class="about-text">
+					<p><strong>Important Data Disclaimer</strong></p>
+					<p>All data shown on this GIS map is simulated (mock/fictional) for demonstration purposes only.</p>
+					<p>Once we receive official approval and access to authentic solid waste management datasets from the concerned authority, the platform will be updated with real, accurate, and live data. Until then, all information you see are entirely simulated to showcase the intended functionality and user experience.</p>
+			 	</div>
+		 	</div>
+            <div class="map-container">
+                <iframe src="https://abc.maps.arcgis.com/apps/instant/sidebar/index.html?appid=1e5fde017dab45fe8815f7da4094e153" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div id="map2" class="tab-content">
+            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">Urban waste management visualization</h2>
+			<div class="container">
+			 	<div class="about-text">
+      				<p><strong>Important Data Disclaimer</strong></p>
+        			<p>The platform will be updated with accurate and verified official data once we receive the necessary approvals and access.</p>
+    			</div>
+			</div>
+            <div class="map-container">
+                <iframe src="https://clausa.app.carto.com/map/3a81fd1c-3f6f-4428-9f62-67a2ea5c9613" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div id="map3" class="tab-content">
+            <h2 class="section-title" style="padding: 20px 20px 10px; text-align:center;">SWM Grievances over years</h2>
+			<div class="container">
+			 	<div class="about-text">
+      				<p><strong>Important Data Disclaimer</strong></p>
+        			<p>The platform will be updated with accurate and verified official data once we receive the necessary approvals and access.</p>
+    			</div>
+			</div>
+            <div class="map-container">
+                <iframe src="https://clausa.app.carto.com/map/32d5f8a9-4f94-4e5f-ae30-cdfb7b6a963d" allowfullscreen></iframe>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-content">
+            <h2 class="dustbin-title">Types of Colour-Coded Dustbins and Their Usage</h2>
+            <div class="dustbins-grid">
+                <div class="dustbin-card dustbin-green"><h3>GREEN</h3><p>Biodegradable & organic</p></div>
+                <div class="dustbin-card dustbin-blue"><h3>BLUE</h3><p>Dry & recyclable</p></div>
+                <div class="dustbin-card dustbin-red"><h3>RED</h3><p>Hazardous / biomedical</p></div>
+                <div class="dustbin-card dustbin-yellow"><h3>YELLOW</h3><p>Sanitary & medical</p></div>
+                <div class="dustbin-card dustbin-black"><h3>BLACK/GREY</h3><p>General waste</p></div>
+            </div>
+            <p class="copyright">© 2026 Swachh Explorer</p>
+        </div>
+    </footer>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+          
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => {
+                if (btn.textContent.trim() === getTabName(tab)) btn.classList.add('active');
+            });
+        }
+      
+        function getTabName(tabId) {
+            if (tabId === 'home') return 'Home';
+            if (tabId === 'about') return 'About';
+            if (tabId === 'map1') return 'Schedule';
+            if (tabId === 'map2') return 'Visualize';
+            if (tabId === 'map3') return 'Grievances';
+            return '';
+        }
+
+        function copyEmail(e) {
+            e.stopImmediatePropagation();
+            const email = "contact@swacchexplorer.in";
+            navigator.clipboard.writeText(email).then(() => {
+                const btn = e.target.closest('button');
+                const original = btn.innerHTML;
+                btn.innerHTML = '✅ Copied!';
+                setTimeout(() => { btn.innerHTML = original; }, 2000);
+            });
+        }
+      
+        document.addEventListener('keydown', e => {
+            if (e.key === '1') switchTab('home');
+            if (e.key === '2') switchTab('about');
+            if (e.key === '3') switchTab('map1');
+            if (e.key === '4') switchTab('map2');
+            if (e.key === '5') switchTab('map3');
+        });
+    </script>
+</body>
+</html>
